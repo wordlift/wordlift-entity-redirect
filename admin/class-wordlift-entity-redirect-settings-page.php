@@ -33,9 +33,8 @@ class Wordlift_Entity_Redirect_Settings_Page {
 			'wl_entity_redirect',
 			'wl_entity_redirect_section_general',
 			array(
-				'label_for'                   => 'entity_redirect_field_enable',
-				'class'                       => 'entity_redirect_row',
-				'entity_redirect_custom_data' => 'custom',
+				'label_for' => 'entity_redirect_field_enable',
+				'class'     => 'entity_redirect_row',
 			)
 		);
 
@@ -46,9 +45,8 @@ class Wordlift_Entity_Redirect_Settings_Page {
 			'wl_entity_redirect',
 			'wl_entity_redirect_section_general',
 			array(
-				'label_for'                   => 'entity_redirect_field_endpoint',
-				'class'                       => 'entity_redirect_row',
-				'entity_redirect_custom_data' => 'custom',
+				'label_for' => 'entity_redirect_field_endpoint',
+				'class'     => 'entity_redirect_row',
 			)
 		);
 

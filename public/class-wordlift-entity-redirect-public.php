@@ -52,6 +52,12 @@ class Wordlift_Entity_Redirect_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wordlift-entity-redirect-endpoint.php';
+		new Wordlift_Entity_Redirect_Endpoint();
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wordlift-entity-redirect-template-redirect.php';
+		new Wordlift_Entity_Redirect_Template_Redirect();
+
 	}
 
 	/**

@@ -46,20 +46,28 @@ class Wordlift_Entity_Redirect_Template_Redirect {
 			return;
 		}
 
-		$uri         = $entity_service->get_uri( $post->ID );
-		$same_ass    = get_post_meta( $post->ID, Wordlift_Schema_Service::FIELD_SAME_AS );
-		$redir       = get_permalink( $post->ID );
-		$initial_url = $this->endpoint .
-		               ( 0 <= strpos( $this->endpoint, '?' ) ? '?redir=' : '&redir=' )
-		               . urlencode( "$redir?noredir" );
+		$uri      = $entity_service->get_uri( $post->ID );
+		$same_ass = get_post_meta( $post->ID, Wordlift_Schema_Service::FIELD_SAME_AS );
+
+		$redir = self::add_parameter( get_permalink( $post->ID ), 'noredir' );
+		$url   = self::add_parameter( $this->endpoint, 'redir=' . urlencode( $redir ) );
 
 		$target_url = array_reduce( array_merge( array( $uri ), $same_ass ), function ( $initial, $this_uri ) {
 			return $initial . '&id[]=' . urlencode( $this_uri );
-		}, $initial_url );
+		}, $url );
 
 		wp_redirect( $target_url );
 		exit();
 
+	}
+
+	private static function add_parameter( $url, $parameter ) {
+
+		if ( false === strpos( $url, '?' ) ) {
+			return $url . '?' . $parameter;
+		}
+
+		return $url . '&' . $parameter;
 	}
 
 }

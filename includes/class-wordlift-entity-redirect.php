@@ -124,6 +124,8 @@ class Wordlift_Entity_Redirect {
 
 		$this->loader = new Wordlift_Entity_Redirect_Loader();
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wordlift-entity-redirect-status.php';
+
 	}
 
 	/**

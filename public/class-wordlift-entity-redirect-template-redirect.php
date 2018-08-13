@@ -46,6 +46,13 @@ class Wordlift_Entity_Redirect_Template_Redirect {
 			return;
 		}
 
+		// Check whether the redirect is disabled on this specific entity.
+		$is_enabled = Wordlift_Entity_Redirect_Status::is_enabled( $post->ID );
+
+		if ( false === $is_enabled ) {
+			return;
+		}
+
 		$uri      = $entity_service->get_uri( $post->ID );
 		$same_ass = get_post_meta( $post->ID, Wordlift_Schema_Service::FIELD_SAME_AS );
 

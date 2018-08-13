@@ -58,6 +58,9 @@ class Wordlift_Entity_Redirect_Admin {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wordlift-entity-redirect-settings-page.php';
 			new Wordlift_Entity_Redirect_Settings_Page();
 
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wordlift-entity-redirect-submit-box.php';
+			new Wordlift_Entity_Redirect_Submit_Box();
+
 		}
 
 	}

@@ -67,8 +67,8 @@ class Wordlift_Entity_Redirect {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'WL_ENTITY_REDIRECT_VERSION' ) ) {
+			$this->version = WL_ENTITY_REDIRECT_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}

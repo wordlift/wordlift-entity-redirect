@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+
+  wordlift-entity-redirect-db:
+    image: mariadb:10.4
+    restart: always
+    volumes:
+      - wordlift-entity-redirect-db-data:/var/lib/mysql
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: password
+
+  wordlift-entity-redirect-wordpress:
+    depends_on:
+      - wordlift-entity-redirect-db
+    image: wordpress:5.2
+    restart: always
+    volumes:
+      - ..:/var/www/html/wp-content/plugins/wordlift-entity-redirect
+    environment:
+      WORDPRESS_DB_HOST: wordlift-entity-redirect-db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: password
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        # Define the site and home URLs.
+        define( 'WP_SITEURL', 'https://wordlift-entity-redirect.localhost' );
+        define( 'WP_HOME', WP_SITEURL );
+
+        # Add support for the reverse proxy.
+        if ( isset( $$_SERVER['HTTP_X_FORWARDED_HOST'] ) ) {
+        	$$_SERVER['HTTP_HOST'] = $$_SERVER['HTTP_X_FORWARDED_HOST'];
+        }
+
+  wordlift-entity-redirect-nginx:
+    depends_on:
+      - wordlift-entity-redirect-wordpress
+    image: nginx:1.17
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    environment:
+      NGINX_HOST: wordlift-entity-redirect-wordpress
+      NGINX_SERVER_NAME: wordlift-entity-redirect.localhost
+    command: /bin/bash -c "envsubst '$$NGINX_HOST $$NGINX_SERVER_NAME' < /etc/nginx/conf.d/wordpress.template > /etc/nginx/conf.d/wordpress.conf && nginx -g 'daemon off;'"
+
+volumes:
+  wordlift-entity-redirect-db-data: {}
+  wordlift-entity-redirect-wordpress-data: {}

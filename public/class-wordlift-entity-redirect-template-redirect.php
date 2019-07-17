@@ -33,8 +33,12 @@ class Wordlift_Entity_Redirect_Template_Redirect {
 			return;
 		}
 
+		if ( ! is_singular() ) {
+			return;
+		}
+
 		$post = get_post();
-		if ( null === $post ) {
+		if ( ! isset( $post ) ) {
 			return;
 		}
 

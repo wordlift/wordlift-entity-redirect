@@ -18,23 +18,37 @@ services:
     depends_on:
       - wordlift-entity-redirect-db
     image: wordpress:5.2
-    restart: always
     volumes:
+      - wordlift-entity-redirect-wordpress-data:/var/www/html
       - ..:/var/www/html/wp-content/plugins/wordlift-entity-redirect
     environment:
       WORDPRESS_DB_HOST: wordlift-entity-redirect-db
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: password
       WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
         # Define the site and home URLs.
         define( 'WP_SITEURL', 'https://wordlift-entity-redirect.localhost' );
         define( 'WP_HOME', WP_SITEURL );
 
+        define( 'SCRIPT_DEBUG', true );
+        define( 'FS_METHOD', 'direct' );
+
         # Add support for the reverse proxy.
         if ( isset( $$_SERVER['HTTP_X_FORWARDED_HOST'] ) ) {
         	$$_SERVER['HTTP_HOST'] = $$_SERVER['HTTP_X_FORWARDED_HOST'];
         }
+
+  wordlift-entity-redirect-cli:
+    image: wordpress:cli
+    user: xfs
+    volumes:
+      - wordlift-entity-redirect-wordpress-data:/var/www/html
+      - ..:/var/www/html/wp-content/plugins/wordlift-entity-redirect
+    depends_on:
+      - wordlift-entity-redirect-db
+      - wordlift-entity-redirect-wordpress
 
   wordlift-entity-redirect-nginx:
     depends_on:

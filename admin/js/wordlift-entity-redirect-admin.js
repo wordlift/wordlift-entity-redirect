@@ -32,3 +32,4 @@ jQuery(function($) {
     $("#wl-entity-redirect-status-select").hide();
   });
 });
+

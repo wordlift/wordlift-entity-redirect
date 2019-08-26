@@ -32,7 +32,7 @@ services:
         define( 'WP_SITEURL', 'https://wordlift-entity-redirect.localhost' );
         define( 'WP_HOME', WP_SITEURL );
 
-        define( 'SCRIPT_DEBUG', true );
+        define( 'SCRIPT_DEBUG', false );
         define( 'FS_METHOD', 'direct' );
 
         # Add support for the reverse proxy.

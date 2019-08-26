@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@wordpress/data": "^4.6.0",
+    "@wordpress/edit-post": "^3.5.0",
+    "@wordpress/i18n": "^3.5.0",
     "@wordpress/plugins": "^2.4.0"
   }
 }

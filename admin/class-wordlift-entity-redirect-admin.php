@@ -63,6 +63,7 @@ class Wordlift_Entity_Redirect_Admin {
 
 		}
 
+		add_action( 'init', array( $this, 'register_meta' ) );
 	}
 
 	/**
@@ -112,4 +113,17 @@ class Wordlift_Entity_Redirect_Admin {
 
 	}
 
+	/**
+	 * Register's post meta.
+	 */
+	public function register_meta() {
+		register_post_meta( 'post', '_wl_entity_redirect_enabled', array(
+			'show_in_rest'  => true,
+			'single'        => true,
+			'type'          => 'string',
+			'auth_callback' => function() {
+				return current_user_can( 'edit_posts' );
+			}
+		) );
+	}
 }

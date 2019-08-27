@@ -79,12 +79,3 @@ function run_wordlift_entity_redirect() {
 
 }
 run_wordlift_entity_redirect();
-
-function myguten_register_post_meta() {
-    register_post_meta( 'post', 'sid_toggle', array(
-        'show_in_rest' => true,
-        'single' => true,
-        'type' => 'boolean',
-    ) );
-}
-add_action( 'init', 'myguten_register_post_meta' );

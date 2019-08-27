@@ -1,60 +1,67 @@
 const { registerPlugin } = wp.plugins;
 const { PluginPostStatusInfo } = wp.editPost;
-const { TextControl, ToggleControl, FormToggle } = wp.components;
+const { TextControl, FormToggle } = wp.components;
 const { withSelect, withDispatch } = wp.data;
 const { withState } = wp.compose;
 const { __ } = wp.i18n;
 
-registerPlugin( 'my-plugin-sidebar', {
-	render() {
+/**
+ * Updates the value in the store.
+ *
+ * @param {function} select
+ */
+const mapSelectToProps = ( select ) => {
+	return {
+		metaFieldValue: select( 'core/editor' ).getEditedPostAttribute( 'meta' )[ '_wl_entity_redirect_enabled' ],
+	}
+}
 
-		const mapSelectToProps = select => {
-			return {
-				metaFieldValue: select( 'core/editor' ).getEditedPostAttribute( 'meta' )[ 'sid_toggle' ],
-			}
-		}
-		
-		const mapDispatchToProps = ( dispatch ) => {
-			return {
-				setMetaFieldValue: function( value ) {
-					dispatch( 'core/editor' ).editPost(
-						{
-							meta: {
-								sid_toggle: value
-							}
-						}
-					);
+/**
+ * Updates the meta value.
+ *
+ * @param {function} dispatch
+ */
+const mapDispatchToProps = ( dispatch ) => {
+	return {
+		setMetaFieldValue: function( value ) {
+			dispatch( 'core/editor' ).editPost(
+				{
+					meta: {
+						_wl_entity_redirect_enabled: value ? 'yes' : 'no'
+					}
 				}
-			}
-		}
-		
-		const MetaBlockField = ( props ) => {
-			return (
-				<ToggleControl
-					checked={ props.metaFieldValue }
-					onChange={ content => {
-						props.setMetaFieldValue( content )
-					} }
-				/>
 			);
 		}
+	}
+};
 
-		const MyFormToggle = withState( {
-			checked: true,
-		} )( ( { checked, setState } ) => (
-			<FormToggle 
-				checked={ checked }
-				onChange={ () => setState( state => ( { checked: ! state.checked } ) ) } 
-			/>
-		) );
-		
-		const MetaBlockFieldWithData = withSelect( mapSelectToProps )( MetaBlockField );
-		const MetaBlockFieldWithDataAndActions = withDispatch( mapDispatchToProps )( MetaBlockFieldWithData );
+/**
+ * Returns the Form Toggle Switch.
+ *
+ * @param {object} props Props passed by mapSelectToProps.
+ */
+const EntityRedirectSwitch = ( props ) => {
 
+	return (
+		<FormToggle
+			checked={ 'yes' === props.metaFieldValue }
+			onChange={ () => props.setMetaFieldValue( ! ( 'yes' === props.metaFieldValue ) ) }
+		/>
+	);
+};
+
+const EntityRedirectSwitchWithData           = withSelect( mapSelectToProps )( EntityRedirectSwitch );
+const EntityRedirectSwitchWithDataAndActions = withDispatch( mapDispatchToProps )( EntityRedirectSwitchWithData );
+
+/**
+ * Registers a new control in the Plugin Post slot fill and renders it.
+ */
+registerPlugin( 'wer-entity-redirect-toggle', {
+	render() {
 		return (
 			<PluginPostStatusInfo>
 				<label>{ __( 'Entity Redirect', 'wordlift-entity-redirect' ) }</label>
-				<MetaBlockFieldWithDataAndActions />
+				<EntityRedirectSwitchWithDataAndActions />
 			</PluginPostStatusInfo>	
 		);
 	}

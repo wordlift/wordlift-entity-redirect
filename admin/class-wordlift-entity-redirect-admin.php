@@ -117,7 +117,7 @@ class Wordlift_Entity_Redirect_Admin {
 	 * Register's post meta.
 	 */
 	public function register_meta() {
-		register_post_meta( '', Wordlift_Entity_Redirect_Status::ENABLED_META_KEY, array(
+		register_post_meta( 'post', Wordlift_Entity_Redirect_Status::ENABLED_META_KEY, array(
 			'show_in_rest'  => true,
 			'single'        => true,
 			'type'          => 'string',

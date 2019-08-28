@@ -15,8 +15,8 @@
  * Plugin Name:       WordLift Entity Redirect
  * Plugin URI:        https://wordlift.io
  * Description:       Redirect Entity Pages to their sameAs equivalent on a master site.
- * Version:           1.0.1
- * Author:            David Riccitelli
+ * Version:           1.1.0-rc1
+ * Author:            WordLift
  * Author URI:        https://wordlift.io
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt

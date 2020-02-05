@@ -43,10 +43,11 @@ class Wordlift_Entity_Redirect_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
+	 * @param string $plugin_name The name of this plugin.
+	 * @param string $version The version of this plugin.
+	 *
 	 * @since    1.0.0
 	 *
-	 * @param      string $plugin_name The name of this plugin.
-	 * @param      string $version The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -108,7 +109,16 @@ class Wordlift_Entity_Redirect_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wordlift-entity-redirect-admin.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->plugin_name . '-index', plugin_dir_url( dirname( __FILE__ ) ) . 'build/index.js', array( 'wp-plugins', 'wp-edit-post' ), $this->version, false );
+
+	}
+
+	public function enqueue_block_editor_assets() {
+
+		// Block Editor isn't ready yet.
+//		wp_enqueue_script( $this->plugin_name . '-index', plugin_dir_url( dirname( __FILE__ ) ) . 'build/index.js', array(
+//			'wp-plugins',
+//			'wp-edit-post'
+//		), $this->version, false );
 
 	}
 

@@ -60,8 +60,10 @@ class Wordlift_Entity_Redirect_Template_Redirect {
 		$uri      = $entity_service->get_uri( $post->ID );
 		$same_ass = get_post_meta( $post->ID, Wordlift_Schema_Service::FIELD_SAME_AS );
 
-		$redir = self::add_parameter( get_permalink( $post->ID ), 'noredir' );
-		$url   = self::add_parameter( $this->endpoint, 'redir=' . urlencode( $redir ) );
+		// $redir = self::add_parameter( get_permalink( $post->ID ), 'noredir' );
+		$current_url = self::get_current_url();
+		$redir       = self::add_parameter( $current_url, 'noredir' );
+		$url         = self::add_parameter( $this->endpoint, 'redir=' . urlencode( $redir ) );
 
 		$target_url = array_reduce( array_merge( array( $uri ), $same_ass ), function ( $initial, $this_uri ) {
 			return $initial . '&id[]=' . urlencode( $this_uri );
@@ -79,6 +81,12 @@ class Wordlift_Entity_Redirect_Template_Redirect {
 		}
 
 		return $url . '&' . $parameter;
+	}
+
+	private static function get_current_url() {
+
+		return ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" )
+		       . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	}
 
 }

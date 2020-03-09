@@ -70,7 +70,7 @@ class Wordlift_Entity_Redirect {
 		if ( defined( 'WL_ENTITY_REDIRECT_VERSION' ) ) {
 			$this->version = WL_ENTITY_REDIRECT_VERSION;
 		} else {
-			$this->version = '1.0.2';
+			$this->version = '1.0.1';
 		}
 		$this->plugin_name = 'wordlift-entity-redirect';
 
@@ -158,7 +158,6 @@ class Wordlift_Entity_Redirect {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_block_editor_assets' );
 
 	}
 

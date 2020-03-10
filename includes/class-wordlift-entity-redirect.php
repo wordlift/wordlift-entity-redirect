@@ -70,7 +70,7 @@ class Wordlift_Entity_Redirect {
 		if ( defined( 'WL_ENTITY_REDIRECT_VERSION' ) ) {
 			$this->version = WL_ENTITY_REDIRECT_VERSION;
 		} else {
-			$this->version = '1.0.1';
+			$this->version = '1.1.0';
 		}
 		$this->plugin_name = 'wordlift-entity-redirect';
 

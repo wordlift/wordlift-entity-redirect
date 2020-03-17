@@ -58,6 +58,9 @@ class Wordlift_Entity_Redirect_Public {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wordlift-entity-redirect-template-redirect.php';
 		new Wordlift_Entity_Redirect_Template_Redirect();
 
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wordlift-entity-redirect-context-card.php';
+		new Wordlift_Entity_Redirect_Context_Cards();
 	}
 
 	/**

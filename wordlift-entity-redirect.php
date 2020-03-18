@@ -78,4 +78,19 @@ function run_wordlift_entity_redirect() {
 	$plugin->run();
 
 }
+
 run_wordlift_entity_redirect();
+
+add_filter( 'wl_anchor_data_attributes', function ( $attributes, $post_id ) {
+
+	if ( ! Wordlift_Entity_Redirect_Status::is_enabled( $post_id ) ) {
+		return $attributes;
+	}
+
+	$ids = array_merge(
+		(array) Wordlift_Entity_Service::get_instance()->get_uri( $post_id ),
+		get_post_meta( $post_id, Wordlift_Schema_Service::FIELD_SAME_AS )
+	);
+
+	return $attributes + array( 'er-id' => implode( ';', $ids ), );
+}, 10, 2 );

@@ -4,6 +4,7 @@ const { TextControl, FormToggle } = wp.components;
 const { withSelect, withDispatch } = wp.data;
 const { withState } = wp.compose;
 const { __ } = wp.i18n;
+const { addFilter } = wp.hooks;
 
 /**
  * Updates the value in the store.
@@ -72,4 +73,18 @@ registerPlugin("wer-entity-redirect-toggle", {
 			</PluginPostStatusInfo>
 		);
 	}
+});
+
+addFilter("wl_context_cards_loader_function", defaultFn => {
+	return el => {
+		// should load things
+		const ids = el.getAttribute("data-er-id").split(";");
+
+		// make the call to the JSON-LD end-point using the master web site end-point.
+
+		// if there are results, return them
+
+		// if the aren't call `defaultFn`.
+
+	};
 });

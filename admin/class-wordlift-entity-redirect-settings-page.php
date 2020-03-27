@@ -51,13 +51,13 @@ class Wordlift_Entity_Redirect_Settings_Page {
 		);
 
 		add_settings_field(
-			'wl_entity_context_cards_field_endpoint',
-			__( 'Context Cards Endpoint', 'wordlift-entity-redirect' ),
-			array( $this, 'entity_context_cards_field_master_endpoint' ),
+			'wl_entity_redirect_wpjson_endpoint',
+			__( 'WP-JSON end-point', 'wordlift-entity-redirect' ),
+			array( $this, 'wl_entity_redirect_wpjson_endpoint' ),
 			'wl_entity_redirect',
 			'wl_entity_redirect_section_general',
 			array(
-				'label_for' => 'entity_context_cards_field_endpoint',
+				'label_for' => 'entity_redirect_wpjson_endpoint',
 				'class'     => 'entity_redirect_row',
 			)
 		);
@@ -97,7 +97,7 @@ class Wordlift_Entity_Redirect_Settings_Page {
 		<?php
 	}
 
-	function entity_context_cards_field_master_endpoint( $args ) {
+	function wl_entity_redirect_wpjson_endpoint( $args ) {
 		$options = get_option( 'wl_entity_redirect_options' );
 		?>
 		<input type="text" name="wl_entity_redirect_options[<?php echo esc_attr( $args['label_for'] ); ?>]"

@@ -27,7 +27,7 @@ class Wordlift_Entity_Redirect_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
@@ -36,21 +36,22 @@ class Wordlift_Entity_Redirect_Public {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
+	 * @param string $plugin_name The name of the plugin.
+	 * @param string $version The version of this plugin.
+	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wordlift-entity-redirect-endpoint.php';
 		new Wordlift_Entity_Redirect_Endpoint();
@@ -58,9 +59,9 @@ class Wordlift_Entity_Redirect_Public {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wordlift-entity-redirect-template-redirect.php';
 		new Wordlift_Entity_Redirect_Template_Redirect();
 
-
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wordlift-entity-redirect-context-card.php';
 		new Wordlift_Entity_Redirect_Context_Cards();
+
 	}
 
 	/**
@@ -105,7 +106,13 @@ class Wordlift_Entity_Redirect_Public {
 		 * class.
 		 */
 
-		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wordlift-entity-redirect-public.js', array( 'jquery' ), $this->version, false );
+		$handle  = $this->plugin_name . '-public';
+		$options = get_option( 'wl_entity_redirect_options' );
+
+		wp_enqueue_script( $handle, plugin_dir_url( dirname( __FILE__ ) ) . 'build/public.js', array( 'wp-hooks' ), $this->version, true );
+		wp_localize_script( $handle, '_wlEntityRedirectSettings', array(
+			'url' => $options['entity_redirect_wpjson_endpoint'],
+		) );
 
 	}
 

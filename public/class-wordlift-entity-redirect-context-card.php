@@ -17,11 +17,11 @@ class Wordlift_Entity_Redirect_Context_Cards {
 		if (
 			! isset( $options['entity_redirect_field_enable'] ) ||
 			'yes' !== $options['entity_redirect_field_enable'] ||
-			empty( $options['entity_context_cards_field_endpoint'] ) ) {
+			empty( $options['entity_redirect_wpjson_endpoint'] ) ) {
 			return;
 		}
 
-		$this->endpoint = $options['entity_context_cards_field_endpoint'];
+		$this->endpoint = $options['entity_redirect_wpjson_endpoint'];
 
 		add_filter( 'wl_context_cards_base_url', array( $this, 'wl_context_cards_base_url' ) );
 

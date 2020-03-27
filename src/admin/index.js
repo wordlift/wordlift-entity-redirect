@@ -1,21 +1,22 @@
-const { registerPlugin } = wp.plugins;
-const { PluginPostStatusInfo } = wp.editPost;
-const { TextControl, FormToggle } = wp.components;
-const { withSelect, withDispatch } = wp.data;
-const { withState } = wp.compose;
-const { __ } = wp.i18n;
-const { addFilter } = wp.hooks;
+/**
+ * WordPress dependencies
+ */
+import { registerPlugin } from "@wordpress/plugins";
+import { PluginPostStatusInfo } from "@wordpress/edit-post";
+import { FormToggle } from "@wordpress/components";
+import { withSelect, withDispatch } from "@wordpress/data";
+import { __ } from "@wordpress/i18n";
 
 /**
  * Updates the value in the store.
  *
  * @param {function} select
  */
-const mapSelectToProps = select => {
+const mapSelectToProps = (select) => {
 	return {
 		metaFieldValue: select("core/editor").getEditedPostAttribute("meta")[
 			"_wl_entity_redirect_enabled"
-		]
+		],
 	};
 };
 
@@ -24,15 +25,15 @@ const mapSelectToProps = select => {
  *
  * @param {function} dispatch
  */
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		setMetaFieldValue: function(value) {
+		setMetaFieldValue: function (value) {
 			dispatch("core/editor").editPost({
 				meta: {
-					_wl_entity_redirect_enabled: value ? "yes" : "no"
-				}
+					_wl_entity_redirect_enabled: value ? "yes" : "no",
+				},
 			});
-		}
+		},
 	};
 };
 
@@ -41,7 +42,7 @@ const mapDispatchToProps = dispatch => {
  *
  * @param {object} props Props passed by mapSelectToProps.
  */
-const EntityRedirectSwitch = props => {
+const EntityRedirectSwitch = (props) => {
 	return (
 		<FormToggle
 			checked={"no" !== props.metaFieldValue}
@@ -72,19 +73,5 @@ registerPlugin("wer-entity-redirect-toggle", {
 				<EntityRedirectSwitchWithDataAndActions />
 			</PluginPostStatusInfo>
 		);
-	}
-});
-
-addFilter("wl_context_cards_loader_function", defaultFn => {
-	return el => {
-		// should load things
-		const ids = el.getAttribute("data-er-id").split(";");
-
-		// make the call to the JSON-LD end-point using the master web site end-point.
-
-		// if there are results, return them
-
-		// if the aren't call `defaultFn`.
-
-	};
+	},
 });

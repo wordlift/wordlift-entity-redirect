@@ -109,7 +109,7 @@ class Wordlift_Entity_Redirect_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wordlift-entity-redirect-admin.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->plugin_name . '-index', plugin_dir_url( dirname( __FILE__ ) ) . 'build/index.js', array( 'wp-plugins', 'wp-edit-post' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . '-admin', plugin_dir_url( dirname( __FILE__ ) ) . 'build/admin.js', array( 'wp-plugins', 'wp-edit-post' ), $this->version, false );
 
 	}
 

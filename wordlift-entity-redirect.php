@@ -15,8 +15,8 @@
  * Plugin Name:       WordLift Entity Redirect
  * Plugin URI:        https://wordlift.io
  * Description:       Redirect Entity Pages to their sameAs equivalent on a master site.
- * Version:           1.0.2
- * Author:            David Riccitelli
+ * Version:           1.2.0-dev
+ * Author:            WordLift
  * Author URI:        https://wordlift.io
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -34,7 +34,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'WL_ENTITY_REDIRECT_VERSION', '1.0.2' );
+define( 'WL_ENTITY_REDIRECT_VERSION', '1.1.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -78,4 +78,19 @@ function run_wordlift_entity_redirect() {
 	$plugin->run();
 
 }
+
 run_wordlift_entity_redirect();
+
+add_filter( 'wl_anchor_data_attributes', function ( $attributes, $post_id ) {
+
+	if ( ! Wordlift_Entity_Redirect_Status::is_enabled( $post_id ) ) {
+		return $attributes;
+	}
+
+	$ids = array_merge(
+		(array) Wordlift_Entity_Service::get_instance()->get_uri( $post_id ),
+		get_post_meta( $post_id, Wordlift_Schema_Service::FIELD_SAME_AS )
+	);
+
+	return $attributes + array( 'er-id' => implode( ';', $ids ), );
+}, 10, 2 );

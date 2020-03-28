@@ -83,10 +83,8 @@ run_wordlift_entity_redirect();
 
 add_filter( 'wl_anchor_data_attributes', function ( $attributes, $post_id ) {
 
-	$attributes[] = array(
-		'entity-redirect-enabled' =>
-			( Wordlift_Entity_Redirect_Status::is_enabled( $post_id ) ? 'true' : 'false' )
-	);
-
-	return $attributes;
+	return $attributes + array(
+			'entity-redirect-enabled' =>
+				( Wordlift_Entity_Redirect_Status::is_enabled( $post_id ) ? 'true' : 'false' )
+		);
 }, 10, 2 );

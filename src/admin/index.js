@@ -1,20 +1,22 @@
-const { registerPlugin } = wp.plugins;
-const { PluginPostStatusInfo } = wp.editPost;
-const { TextControl, FormToggle } = wp.components;
-const { withSelect, withDispatch } = wp.data;
-const { withState } = wp.compose;
-const { __ } = wp.i18n;
+/**
+ * WordPress dependencies
+ */
+import { registerPlugin } from "@wordpress/plugins";
+import { PluginPostStatusInfo } from "@wordpress/edit-post";
+import { FormToggle } from "@wordpress/components";
+import { withSelect, withDispatch } from "@wordpress/data";
+import { __ } from "@wordpress/i18n";
 
 /**
  * Updates the value in the store.
  *
  * @param {function} select
  */
-const mapSelectToProps = select => {
+const mapSelectToProps = (select) => {
 	return {
 		metaFieldValue: select("core/editor").getEditedPostAttribute("meta")[
 			"_wl_entity_redirect_enabled"
-		]
+		],
 	};
 };
 
@@ -23,15 +25,15 @@ const mapSelectToProps = select => {
  *
  * @param {function} dispatch
  */
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
-		setMetaFieldValue: function(value) {
+		setMetaFieldValue: function (value) {
 			dispatch("core/editor").editPost({
 				meta: {
-					_wl_entity_redirect_enabled: value ? "yes" : "no"
-				}
+					_wl_entity_redirect_enabled: value ? "yes" : "no",
+				},
 			});
-		}
+		},
 	};
 };
 
@@ -40,7 +42,7 @@ const mapDispatchToProps = dispatch => {
  *
  * @param {object} props Props passed by mapSelectToProps.
  */
-const EntityRedirectSwitch = props => {
+const EntityRedirectSwitch = (props) => {
 	return (
 		<FormToggle
 			checked={"no" !== props.metaFieldValue}
@@ -71,5 +73,5 @@ registerPlugin("wer-entity-redirect-toggle", {
 				<EntityRedirectSwitchWithDataAndActions />
 			</PluginPostStatusInfo>
 		);
-	}
+	},
 });

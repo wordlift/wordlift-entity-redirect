@@ -50,6 +50,18 @@ class Wordlift_Entity_Redirect_Settings_Page {
 			)
 		);
 
+		add_settings_field(
+			'wl_entity_redirect_wpjson_endpoint',
+			__( 'WP-JSON end-point', 'wordlift-entity-redirect' ),
+			array( $this, 'wl_entity_redirect_wpjson_endpoint' ),
+			'wl_entity_redirect',
+			'wl_entity_redirect_section_general',
+			array(
+				'label_for' => 'entity_redirect_wpjson_endpoint',
+				'class'     => 'entity_redirect_row',
+			)
+		);
+
 	}
 
 	public function entity_redirect_section_general( $args ) {
@@ -82,6 +94,17 @@ class Wordlift_Entity_Redirect_Settings_Page {
         <p class="description">
 			<?php esc_html_e( 'Type the remote end-point, e.g. https://master.example.org/wl-api?action=entity-redirect.', 'wordlift-entity-redirect' ); ?>
         </p>
+		<?php
+	}
+
+	function wl_entity_redirect_wpjson_endpoint( $args ) {
+		$options = get_option( 'wl_entity_redirect_options' );
+		?>
+		<input type="text" name="wl_entity_redirect_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
+		       value="<?php esc_attr_e( $options[ $args['label_for'] ] ); ?>" class="regular-text"/>
+		<p class="description">
+			<?php esc_html_e( 'Type the remote end-point, e.g. https://master.example.org/wl-api?action=entity-redirect.', 'wordlift-entity-redirect' ); ?>
+		</p>
 		<?php
 	}
 

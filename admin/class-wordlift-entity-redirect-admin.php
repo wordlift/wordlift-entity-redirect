@@ -108,8 +108,14 @@ class Wordlift_Entity_Redirect_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wordlift-entity-redirect-admin.js', array( 'jquery' ), $this->version, false );
-		wp_enqueue_script( $this->plugin_name . '-index', plugin_dir_url( dirname( __FILE__ ) ) . 'build/index.js', array( 'wp-plugins', 'wp-edit-post' ), $this->version, false );
+		if ( $this->is_gutenberg_page() ) {
+			wp_enqueue_script( $this->plugin_name . '-admin', plugin_dir_url( dirname( __FILE__ ) ) . 'build/admin.js', array(
+				'wp-plugins',
+				'wp-edit-post'
+			), $this->version, false );
+		} else {
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wordlift-entity-redirect-admin.js', array( 'jquery' ), $this->version, false );
+		}
 
 	}
 
@@ -121,9 +127,30 @@ class Wordlift_Entity_Redirect_Admin {
 			'show_in_rest'  => true,
 			'single'        => true,
 			'type'          => 'string',
-			'auth_callback' => function() {
+			'auth_callback' => function () {
 				return current_user_can( 'edit_posts' );
 			}
 		) );
+	}
+
+	/**
+	 * Helper function to check Gutenberg
+	 */
+	function is_gutenberg_page() {
+		if ( function_exists( 'is_gutenberg_page' ) &&
+		     is_gutenberg_page()
+		) {
+			// The Gutenberg plugin is on.
+			return true;
+		}
+		$current_screen = get_current_screen();
+		if ( method_exists( $current_screen, 'is_block_editor' ) &&
+		     $current_screen->is_block_editor()
+		) {
+			// Gutenberg page on 5+.
+			return true;
+		}
+
+		return false;
 	}
 }

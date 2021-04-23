@@ -103,7 +103,7 @@ class Wordlift_Entity_Redirect_Settings_Page {
 		<input type="text" name="wl_entity_redirect_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
 		       value="<?php esc_attr_e( $options[ $args['label_for'] ] ); ?>" class="regular-text"/>
 		<p class="description">
-			<?php esc_html_e( 'Type the remote end-point, e.g. https://master.example.org/wl-api?action=entity-redirect.', 'wordlift-entity-redirect' ); ?>
+			<?php esc_html_e( 'Type the remote end-point, e.g. https://master.example.org/wp-json/wordlift/v1/jsonld.', 'wordlift-entity-redirect' ); ?>
 		</p>
 		<?php
 	}
